@@ -7,11 +7,11 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.GAME;
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
+      name: _Paths.GAME,
       page: () => const GameView(),
       binding: GameBinding(),
     ),

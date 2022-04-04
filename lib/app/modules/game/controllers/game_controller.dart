@@ -33,10 +33,7 @@ class GameController extends GetxController {
 
   void timerStart() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (lives.value == 0) {
-        timer.cancel();
-        return;
-      } else if (point.value == 0) {
+      if (lives.value == 0 || point.value == 0 || gameDuration.value == 0) {
         timer.cancel();
         return;
       } else {
