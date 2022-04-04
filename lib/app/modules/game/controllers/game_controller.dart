@@ -1,23 +1,25 @@
+import 'dart:async';
+
 import 'package:cannacal/app/data/model/option.dart';
 import 'package:cannacal/app/data/provider/option_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GameController extends GetxController {
+  // Provider
   final OptionProvider _optionProvider = Get.find<OptionProvider>();
 
-  final lives = 5.obs;
-  final matrix = 3.obs;
+  // State controller
   final listRowTapped = <int>[].obs;
   final listIndexTapped = <int>[].obs;
   final listOption = <Option>[].obs;
-  final point = 100.obs;
   final showResetButton = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // Game preferences
+  final lives = 5.obs;
+  final matrix = 3.obs;
+  final point = 100.obs;
+  final gameDuration = 180.obs;
 
   @override
   void onReady() async {
@@ -26,6 +28,21 @@ class GameController extends GetxController {
       matrix.value,
       point.value,
     );
+    timerStart();
+  }
+
+  void timerStart() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (lives.value == 0) {
+        timer.cancel();
+        return;
+      } else if (point.value == 0) {
+        timer.cancel();
+        return;
+      } else {
+        gameDuration.value--;
+      }
+    });
   }
 
   void onReset() {

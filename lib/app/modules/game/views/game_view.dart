@@ -1,3 +1,6 @@
+import 'package:cannacal/app/core/theme/text_theme.dart';
+import 'package:cannacal/app/core/utils/constant.dart';
+import 'package:cannacal/app/modules/game/widgets/grid_option.dart';
 import 'package:flutter/material.dart';
 import 'package:cannacal/app/modules/game/controllers/game_controller.dart';
 import 'package:get/get.dart';
@@ -8,22 +11,54 @@ class GameView extends GetView<GameController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: gameAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(kPadding),
         child: Column(
           children: [
-            const SizedBox(height: 16),
+            const SizedBox(height: kPadding),
             hud(),
-            const SizedBox(height: 16),
+            const SizedBox(height: kPadding * 2),
             pointText(),
-            const SizedBox(height: 16),
+            const SizedBox(height: kPadding),
             gameOption(),
-            const SizedBox(height: 16),
+            const SizedBox(height: kPadding),
             resetButton(),
             const Spacer(),
           ],
         ),
       ),
+    );
+  }
+
+  AppBar gameAppBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.home,
+          color: Colors.black,
+        ),
+        onPressed: () {},
+      ),
+      title: Text(
+        'Plus Minus',
+        style: textStyle.copyWith(
+          fontSize: 24,
+          color: Colors.black,
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          ),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 
@@ -38,10 +73,19 @@ class GameView extends GetView<GameController> {
     return Expanded(
       flex: 2,
       child: Obx(
-        () => Text(
-          '${controller.point.value}',
-          style: const TextStyle(
-            fontSize: 50,
+        () => Container(
+          padding: const EdgeInsets.symmetric(horizontal: kPadding),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.black.withOpacity(0.5),
+              width: 4,
+            ),
+            color: Colors.white,
+          ),
+          child: Text(
+            '${controller.point.value}',
+            style: textStyle.copyWith(fontSize: 50),
           ),
         ),
       ),
@@ -52,12 +96,26 @@ class GameView extends GetView<GameController> {
     return Expanded(
       flex: 0,
       child: Obx(
-        () => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text('Lives: ${controller.lives.value}'),
-          ],
-        ),
+        () {
+          final timer = controller.gameDuration.value;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Lives: ${controller.lives.value}',
+                style: textStyle,
+              ),
+              Text(
+                '${timer ~/ 60}:${timer % 60}',
+                style: textStyle,
+              ),
+              Text(
+                'Lives: ${controller.lives.value}',
+                style: textStyle,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -76,54 +134,5 @@ class GameView extends GetView<GameController> {
       }
       return Container();
     });
-  }
-}
-
-class GridOption extends GetView<GameController> {
-  const GridOption({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final matrix = controller.matrix.value;
-    return Obx(
-      () => GridView.builder(
-        itemCount: controller.listOption.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: matrix,
-          childAspectRatio: 1,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
-        ),
-        itemBuilder: (context, index) {
-          final option = controller.listOption[index];
-          return Obx(
-            () => InkWell(
-              onTap: controller.onTapOption(index, option.row),
-              child: Ink(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: controller.optionColor(index),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 4,
-                      offset: const Offset(5, 5),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    '${option.value}',
-                    style: const TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }
