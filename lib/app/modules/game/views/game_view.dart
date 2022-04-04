@@ -106,11 +106,7 @@ class GameView extends GetView<GameController> {
                 style: textStyle,
               ),
               Text(
-                '${timer ~/ 60}:${timer % 60}',
-                style: textStyle,
-              ),
-              Text(
-                'Lives: ${controller.lives.value}',
+                'Time left: ${timer ~/ 60}:${timer % 60}',
                 style: textStyle,
               ),
             ],
