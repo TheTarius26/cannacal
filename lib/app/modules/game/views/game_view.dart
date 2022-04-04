@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cannacal/app/modules/home/controllers/home_controller.dart';
+import 'package:cannacal/app/modules/game/controllers/game_controller.dart';
 import 'package:get/get.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class GameView extends GetView<GameController> {
+  const GameView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class GridOption extends GetView<HomeController> {
+class GridOption extends GetView<GameController> {
   const GridOption({Key? key}) : super(key: key);
 
   @override
@@ -102,7 +102,7 @@ class GridOption extends GetView<HomeController> {
               child: Ink(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: controller.cellColor(index),
+                  color: controller.optionColor(index),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.5),

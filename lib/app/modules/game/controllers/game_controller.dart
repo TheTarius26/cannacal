@@ -3,12 +3,13 @@ import 'package:cannacal/app/data/provider/option_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class GameController extends GetxController {
   final OptionProvider _optionProvider = Get.find<OptionProvider>();
 
   final lives = 5.obs;
   final matrix = 3.obs;
   final listRowTapped = <int>[].obs;
+  final listIndexTapped = <int>[].obs;
   final listOption = <Option>[].obs;
   final point = 100.obs;
   final showResetButton = false.obs;
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
   void onReset() {
     point.value = 100;
     listRowTapped.value = <int>[];
+    listIndexTapped.value = <int>[];
     showResetButton.value = false;
     --lives.value;
   }
@@ -41,6 +43,7 @@ class HomeController extends GetxController {
         Get.printInfo(
             info: 'row list contains $row? ${listRowTapped.contains(row)}');
         listRowTapped.add(row);
+        listIndexTapped.add(index);
         point.value -= listOption[index].value;
 
         if (point.value == 0) {
@@ -88,7 +91,13 @@ class HomeController extends GetxController {
     }
   }
 
-  Color cellColor(int index) {
-    return Colors.white60;
+  Color optionColor(int index) {
+    if (listIndexTapped.contains(index)) {
+      return Colors.green.shade100;
+    } else if (listRowTapped.contains(listOption[index].row)) {
+      return Colors.red.shade100;
+    } else {
+      return Colors.blue.shade100;
+    }
   }
 }
