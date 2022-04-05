@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/data/model/option.dart';
 import 'package:cannacal/app/data/provider/option_provider.dart';
+import 'package:cannacal/app/modules/game/views/game_win_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +21,15 @@ class GameController extends GetxController {
   final lives = 5.obs;
   final matrix = 3.obs;
   final point = 100.obs;
-  final gameDuration = 180.obs;
+  final baseGameDuration = 180;
+  final gameDuration = 0.obs;
+  final score = 0.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    gameDuration.value = baseGameDuration;
+  }
 
   @override
   void onReady() async {
@@ -62,13 +72,16 @@ class GameController extends GetxController {
 
         if (point.value == 0) {
           onWin();
+          return;
         }
 
         if (listRowTapped.length == matrix.value) {
-          showResetButton.value = true;
-          if (lives.value < 1) {
+          if (lives.value == 0) {
             onLose();
+            return;
           }
+          showResetButton.value = true;
+          return;
         }
       };
     } else {
@@ -78,20 +91,10 @@ class GameController extends GetxController {
 
   void onWin() {
     Get.bottomSheet(
-      Container(
-        color: Colors.white,
-        child: const Center(
-          child: Text(
-            'You Win!',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      const GameWinView(),
       isDismissible: false,
       enableDrag: false,
+      isScrollControlled: true,
     );
     return;
   }
@@ -117,11 +120,23 @@ class GameController extends GetxController {
 
   Color optionColor(int index) {
     if (listIndexTapped.contains(index)) {
-      return Colors.green.shade100;
-    } else if (listRowTapped.contains(listOption[index].row)) {
-      return Colors.red.shade100;
+      return colorSecondary;
     } else {
-      return Colors.blue.shade100;
+      return colorPrimary;
     }
+  }
+
+  int timeCalc() {
+    return gameDuration.value * 5;
+  }
+
+  int liveCalc() {
+    return lives.value * 1000;
+  }
+
+  int scoreCalc() {
+    final tempScore = timeCalc() + liveCalc();
+    score.value = tempScore;
+    return tempScore;
   }
 }

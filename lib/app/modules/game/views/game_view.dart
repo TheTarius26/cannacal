@@ -1,3 +1,4 @@
+import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/core/theme/text_theme.dart';
 import 'package:cannacal/app/core/utils/constant.dart';
 import 'package:cannacal/app/modules/game/widgets/grid_option.dart';
@@ -12,20 +13,66 @@ class GameView extends GetView<GameController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: gameAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(kPadding),
-        child: Column(
-          children: [
-            const SizedBox(height: kPadding),
-            hud(),
-            const SizedBox(height: kPadding * 2),
-            pointText(),
-            const SizedBox(height: kPadding),
-            gameOption(),
-            const SizedBox(height: kPadding),
-            resetButton(),
-            const Spacer(),
-          ],
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(kPadding),
+            child: Column(
+              children: [
+                const SizedBox(height: kToolbarHeight),
+                timer(),
+                const SizedBox(height: kPadding),
+                pointText(),
+                const SizedBox(height: kPadding),
+                lives(),
+                const SizedBox(height: kPadding),
+                gameTable(),
+                const SizedBox(height: kPadding),
+                resetButton(),
+              ],
+            ),
+          ),
+          bannerAd(),
+        ],
+      ),
+    );
+  }
+
+  Obx lives() {
+    return Obx(() {
+      final lives = controller.lives.value;
+      if (lives == 0) {
+        return Text(
+          'Last Chance!',
+          style: textStyle.copyWith(
+            color: colorPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      }
+      return Wrap(
+        children: List.generate(
+          lives,
+          (index) => const Icon(
+            Icons.favorite,
+            color: colorPrimary,
+          ),
+        ),
+      );
+    });
+  }
+
+  Container bannerAd() {
+    return Container(
+      color: colorPrimary,
+      height: kToolbarHeight,
+      alignment: Alignment.center,
+      child: Text(
+        'Place Ads Here',
+        style: textStyle.copyWith(
+          fontSize: 16,
+          color: colorSurface,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -33,83 +80,65 @@ class GameView extends GetView<GameController> {
 
   AppBar gameAppBar() {
     return AppBar(
-      backgroundColor: Colors.transparent,
-      centerTitle: true,
+      backgroundColor: colorSecondary,
       elevation: 0,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.home,
-          color: Colors.black,
-        ),
-        onPressed: () {},
-      ),
       title: Text(
         'Plus Minus',
         style: textStyle.copyWith(
           fontSize: 24,
-          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          color: colorSurface,
         ),
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
-      ],
     );
   }
 
-  Expanded gameOption() {
+  Expanded gameTable() {
     return const Expanded(
       flex: 9,
-      child: GridOption(),
+      child: GameTable(),
     );
   }
 
-  Expanded pointText() {
-    return Expanded(
-      flex: 2,
-      child: Obx(
-        () => Container(
-          padding: const EdgeInsets.symmetric(horizontal: kPadding),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.black.withOpacity(0.5),
-              width: 4,
-            ),
-            color: Colors.white,
+  Obx pointText() {
+    return Obx(
+      () => Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(kPadding),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: colorPrimary,
+            width: 4,
           ),
-          child: Text(
-            '${controller.point.value}',
-            style: textStyle.copyWith(fontSize: 50),
+          color: Colors.white,
+        ),
+        child: Text(
+          '${controller.point.value}',
+          style: textStyle.copyWith(
+            fontSize: 30,
+            color: colorPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
   }
 
-  Expanded hud() {
+  Expanded timer() {
     return Expanded(
       flex: 0,
       child: Obx(
         () {
           final timer = controller.gameDuration.value;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Lives: ${controller.lives.value}',
-                style: textStyle,
-              ),
-              Text(
-                'Time left: ${timer ~/ 60}:${timer % 60}',
-                style: textStyle,
-              ),
-            ],
+          return Text(
+            'Time left: ${timer ~/ 60}:${timer % 60}',
+            style: textStyle.copyWith(
+              color: colorPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           );
         },
       ),
@@ -125,6 +154,10 @@ class GameView extends GetView<GameController> {
             onPressed: controller.onReset,
             icon: const Icon(Icons.refresh),
             label: const Text('Reset'),
+            style: ElevatedButton.styleFrom(
+              primary: colorPrimary,
+              onSurface: colorSurface,
+            ),
           ),
         );
       }
