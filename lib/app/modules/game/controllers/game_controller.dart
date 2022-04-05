@@ -24,16 +24,19 @@ class GameController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
+    timerStart();
     listOption.value = await _optionProvider.getAllOptions(
       matrix.value,
       point.value,
     );
-    timerStart();
   }
 
   void timerStart() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (lives.value == 0 || point.value == 0 || gameDuration.value == 0) {
+      if (gameDuration.value == 0) {
+        timer.cancel();
+        onLose();
+      } else if (lives.value == 0 || point.value == 0) {
         timer.cancel();
         return;
       } else {
@@ -53,58 +56,63 @@ class GameController extends GetxController {
   void Function()? onTapOption(int index, int row) {
     if (!listRowTapped.contains(row)) {
       return () {
-        Get.printInfo(info: 'Row $row tapped');
-        Get.printInfo(
-            info: 'row list contains $row? ${listRowTapped.contains(row)}');
         listRowTapped.add(row);
         listIndexTapped.add(index);
         point.value -= listOption[index].value;
 
         if (point.value == 0) {
-          Get.bottomSheet(
-            Container(
-              color: Colors.white,
-              child: const Center(
-                child: Text(
-                  'You Win!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            isDismissible: false,
-            enableDrag: false,
-          );
-          return;
+          onWin();
         }
 
         if (listRowTapped.length == matrix.value) {
           showResetButton.value = true;
           if (lives.value < 1) {
-            Get.bottomSheet(
-              Container(
-                color: Colors.white,
-                child: const Center(
-                  child: Text(
-                    'You Lose!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              isDismissible: false,
-            );
-            return;
+            onLose();
           }
         }
       };
     } else {
       return null;
     }
+  }
+
+  void onWin() {
+    Get.bottomSheet(
+      Container(
+        color: Colors.white,
+        child: const Center(
+          child: Text(
+            'You Win!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      isDismissible: false,
+      enableDrag: false,
+    );
+    return;
+  }
+
+  void onLose() {
+    Get.bottomSheet(
+      Container(
+        color: Colors.white,
+        child: const Center(
+          child: Text(
+            'You Lose!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      isDismissible: false,
+    );
+    return;
   }
 
   Color optionColor(int index) {
