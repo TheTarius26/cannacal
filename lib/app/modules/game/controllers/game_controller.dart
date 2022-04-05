@@ -77,12 +77,12 @@ class GameController extends GetxController {
             isDismissible: false,
             enableDrag: false,
           );
+          return;
         }
 
         if (listRowTapped.length == matrix.value) {
           showResetButton.value = true;
           if (lives.value < 1) {
-            Get.printInfo(info: 'lives: ${lives.value}');
             Get.bottomSheet(
               Container(
                 color: Colors.white,
@@ -96,7 +96,9 @@ class GameController extends GetxController {
                   ),
                 ),
               ),
+              isDismissible: false,
             );
+            return;
           }
         }
       };
