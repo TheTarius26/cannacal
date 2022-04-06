@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class GameWinView extends GetView<GameController> {
-  const GameWinView({Key? key}) : super(key: key);
+class GameLoseView extends GetView<GameController> {
+  const GameLoseView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class GameWinView extends GetView<GameController> {
       padding: const EdgeInsets.all(kPadding),
       alignment: Alignment.center,
       child: AspectRatio(
-        aspectRatio: 1,
+        aspectRatio: 16 / 8,
         child: Container(
           padding: const EdgeInsets.all(kPadding / 2),
           decoration: BoxDecoration(
@@ -32,7 +32,7 @@ class GameWinView extends GetView<GameController> {
             children: [
               Center(
                 child: Text(
-                  'You Win!',
+                  'You Lose!',
                   style: textStyle.copyWith(
                     fontSize: 24,
                     color: colorPrimary,
@@ -41,7 +41,6 @@ class GameWinView extends GetView<GameController> {
                 ),
               ),
               const SizedBox(height: kPadding),
-              gameSummary(),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +65,7 @@ class GameWinView extends GetView<GameController> {
                       controller.restart();
                     },
                     child: Text(
-                      'Play Again',
+                      'Try Again',
                       style: textStyle.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -83,46 +82,6 @@ class GameWinView extends GetView<GameController> {
           ),
         ),
       ),
-    );
-  }
-
-  Column gameSummary() {
-    return Column(
-      children: [
-        calcScoreRow('Time completion x 5', controller.timeCalc()),
-        const SizedBox(height: kPadding / 4),
-        calcScoreRow('Lives left x 1000', controller.liveCalc()),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: kPadding / 2),
-          color: colorPrimary,
-          height: 2,
-        ),
-        calcScoreRow('Score', controller.scoreCalc()),
-      ],
-    );
-  }
-
-  Row calcScoreRow(String title, int value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: textStyle.copyWith(
-            fontSize: 14,
-            color: colorPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          '$value',
-          style: textStyle.copyWith(
-            fontSize: 14,
-            color: colorPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 }

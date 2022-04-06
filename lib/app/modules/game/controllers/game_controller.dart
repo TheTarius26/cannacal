@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:cannacal/app/core/theme/color_theme.dart';
+import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/data/model/option.dart';
 import 'package:cannacal/app/data/provider/option_provider.dart';
+import 'package:cannacal/app/modules/game/views/game_lose_view.dart';
 import 'package:cannacal/app/modules/game/views/game_win_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,37 +18,44 @@ class GameController extends GetxController {
   final listIndexTapped = <int>[].obs;
   final listOption = <Option>[].obs;
   final showResetButton = false.obs;
+  final isGameOver = false.obs;
 
   // Game preferences
-  final lives = 5.obs;
-  final matrix = 3.obs;
-  final point = 100.obs;
-  final baseGameDuration = 180;
+  final setting = GameSetting().obs;
+  final lives = 0.obs;
+  final matrix = 0.obs;
+  final point = 0.obs;
   final gameDuration = 0.obs;
   final score = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    gameDuration.value = baseGameDuration;
+    setUp();
   }
 
   @override
   void onReady() async {
     super.onReady();
     timerStart();
+    getOptionList();
+  }
+
+  void getOptionList() async {
     listOption.value = await _optionProvider.getAllOptions(
       matrix.value,
       point.value,
     );
   }
 
+  /// start the timer
   void timerStart() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (gameDuration.value == 0) {
         timer.cancel();
         onLose();
-      } else if (lives.value == 0 || point.value == 0) {
+        return;
+      } else if (isGameOver.value) {
         timer.cancel();
         return;
       } else {
@@ -55,15 +64,34 @@ class GameController extends GetxController {
     });
   }
 
+  /// set up on state first initialized for game preferences and state controller
+  void setUp() {
+    setting.value = GameSetting.easy();
+    gameDuration.value = setting.value.duration;
+    lives.value = setting.value.lives;
+    matrix.value = setting.value.matrix;
+    point.value = setting.value.point;
+    isGameOver.value = false;
+
+    if (listRowTapped.isNotEmpty) {
+      listRowTapped.clear();
+      listIndexTapped.clear();
+      listOption.clear();
+      showResetButton.value = false;
+    }
+  }
+
+  /// state when game reset to normal but lose 1 lives
   void onReset() {
-    point.value = 100;
+    point.value = setting.value.point;
     listRowTapped.value = <int>[];
     listIndexTapped.value = <int>[];
     showResetButton.value = false;
     --lives.value;
   }
 
-  void Function()? onTapOption(int index, int row) {
+  /// listener when button pressed
+  void Function()? onTapButton(int index, int row) {
     if (!listRowTapped.contains(row)) {
       return () {
         listRowTapped.add(row);
@@ -89,36 +117,30 @@ class GameController extends GetxController {
     }
   }
 
+  /// state when the game is win
   void onWin() {
+    isGameOver.value = true;
     Get.bottomSheet(
       const GameWinView(),
       isDismissible: false,
       enableDrag: false,
       isScrollControlled: true,
     );
-    return;
   }
 
+  /// state when the game is lose
   void onLose() {
+    isGameOver.value = true;
     Get.bottomSheet(
-      Container(
-        color: Colors.white,
-        child: const Center(
-          child: Text(
-            'You Lose!',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      const GameLoseView(),
       isDismissible: false,
+      enableDrag: false,
+      isScrollControlled: true,
     );
-    return;
   }
 
-  Color optionColor(int index) {
+  /// change color for the pressed button
+  Color changeColorPressed(int index) {
     if (listIndexTapped.contains(index)) {
       return colorSecondary;
     } else {
@@ -138,5 +160,9 @@ class GameController extends GetxController {
     final tempScore = timeCalc() + liveCalc();
     score.value = tempScore;
     return tempScore;
+  }
+
+  void restart() {
+    onInit();
   }
 }

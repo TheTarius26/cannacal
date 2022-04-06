@@ -30,11 +30,11 @@ class GameTable extends GetView<GameController> {
     final option = controller.listOption[index];
     return Obx(
       () => InkWell(
-        onTap: controller.onTapOption(index, option.row),
+        onTap: controller.onTapButton(index, option.row),
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: controller.optionColor(index),
+            color: controller.changeColorPressed(index),
           ),
           child: Center(
             child: Text(
