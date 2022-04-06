@@ -55,7 +55,7 @@ class GameView extends GetView<GameController> {
           lives,
           (index) => const Icon(
             Icons.favorite,
-            color: colorPrimary,
+            color: colorError,
           ),
         ),
       );
