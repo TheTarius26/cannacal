@@ -1,5 +1,3 @@
-import 'package:cannacal/app/data/enums/difficulty.dart';
-
 class GameSetting {
   int lives;
   int matrix;
