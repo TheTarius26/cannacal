@@ -66,7 +66,7 @@ class GameController extends GetxController {
 
   /// set up on state first initialized for game preferences and state controller
   void setUp() {
-    setting.value = GameSetting.veryEasy();
+    setting.value = Get.arguments;
     gameDuration.value = setting.value.duration;
     lives.value = setting.value.lives;
     matrix.value = setting.value.matrix;

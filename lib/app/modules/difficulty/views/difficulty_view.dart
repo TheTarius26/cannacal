@@ -1,11 +1,12 @@
 import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/core/theme/text_theme.dart';
 import 'package:cannacal/app/core/utils/constant.dart';
+import 'package:cannacal/app/data/model/game_setting.dart';
+import 'package:cannacal/app/modules/difficulty/controllers/difficulty_controller.dart';
+import 'package:cannacal/app/modules/difficulty/widgets/difficulty_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-import '../controllers/difficulty_controller.dart';
 
 class DifficultyView extends GetView<DifficultyController> {
   const DifficultyView({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class DifficultyView extends GetView<DifficultyController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: colorBackground,
         appBar: AppBar(
           backgroundColor: colorSecondary,
           title: Text(
@@ -28,6 +30,7 @@ class DifficultyView extends GetView<DifficultyController> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(height: kPadding * 4),
               Center(
                 child: Text(
                   'Choose difficulty to play',
@@ -38,9 +41,22 @@ class DifficultyView extends GetView<DifficultyController> {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+              ...difficultyList(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  List<DifficultyItem> difficultyList() {
+    final list = GameSetting.getListGameSetting();
+    return List.generate(
+      list.length,
+      (index) => DifficultyItem(
+        highScore: '9999999999',
+        gameSetting: list[index],
       ),
     );
   }
