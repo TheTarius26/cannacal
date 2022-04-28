@@ -93,7 +93,7 @@ class GameController extends GetxController {
     --lives.value;
   }
 
-  /// listener when button pressed
+  /// listener when option button pressed
   void Function()? onTapButton(int index, int row) {
     if (!listRowTapped.contains(row)) {
       return () {

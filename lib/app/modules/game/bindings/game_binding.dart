@@ -1,3 +1,4 @@
+import 'package:cannacal/app/data/provider/db/high_score_provider.dart';
 import 'package:cannacal/app/data/provider/local/option_provider.dart';
 import 'package:cannacal/app/data/repo/game_repository.dart';
 import 'package:cannacal/app/modules/game/controllers/game_controller.dart';
@@ -14,8 +15,10 @@ class GameBinding extends Bindings {
     Get.lazyPut(
       () => GameRepository(
         optionProvider: Get.find<OptionProvider>(),
+        highScoreProvider: Get.find<HighScoreProvider>(),
       ),
     );
     Get.lazyPut(() => OptionProvider());
+    Get.lazyPut(() => HighScoreProvider());
   }
 }
