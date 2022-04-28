@@ -1,9 +1,7 @@
 import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/core/theme/text_theme.dart';
 import 'package:cannacal/app/core/utils/constant.dart';
-import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/modules/difficulty/controllers/difficulty_controller.dart';
-import 'package:cannacal/app/modules/difficulty/widgets/difficulty_item.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -42,21 +40,10 @@ class DifficultyView extends GetView<DifficultyController> {
                 ),
               ),
               const SizedBox(height: 20),
-              ...difficultyList(),
+              ...controller.difficultyList(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  List<DifficultyItem> difficultyList() {
-    final list = GameSetting.getListGameSetting();
-    return List.generate(
-      list.length,
-      (index) => DifficultyItem(
-        highScore: '9999999999',
-        gameSetting: list[index],
       ),
     );
   }

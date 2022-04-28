@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/data/model/option.dart';
-import 'package:cannacal/app/data/provider/option_provider.dart';
+import 'package:cannacal/app/data/provider/local/option_provider.dart';
+import 'package:cannacal/app/data/repo/game_repository.dart';
 import 'package:cannacal/app/modules/game/views/game_lose_view.dart';
 import 'package:cannacal/app/modules/game/views/game_win_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GameController extends GetxController {
-  // Provider
-  final OptionProvider _optionProvider = Get.find<OptionProvider>();
+  final GameRepository _gameRepository;
+
+  GameController({required GameRepository gameRepository})
+      : _gameRepository = gameRepository;
 
   // State controller
   final listRowTapped = <int>[].obs;
@@ -42,7 +45,7 @@ class GameController extends GetxController {
   }
 
   void getOptionList() async {
-    listOption.value = await _optionProvider.getAllOptions(
+    listOption.value = await _gameRepository.options(
       matrix.value,
       point.value,
     );
