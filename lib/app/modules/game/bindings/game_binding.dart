@@ -8,10 +8,14 @@ class GameBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(
       () => GameController(
-        gameRepository: GameRepository(
-          optionProvider: OptionProvider(),
-        ),
+        gameRepository: Get.find<GameRepository>(),
       ),
     );
+    Get.lazyPut(
+      () => GameRepository(
+        optionProvider: Get.find<OptionProvider>(),
+      ),
+    );
+    Get.lazyPut(() => OptionProvider());
   }
 }

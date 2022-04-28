@@ -26,22 +26,24 @@ class DifficultyView extends GetView<DifficultyController> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: kPadding * 4),
-              Center(
-                child: Text(
-                  'Choose difficulty to play',
-                  style: textStyle.copyWith(
-                    color: colorPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          child: Obx(
+            () => Column(
+              children: [
+                const SizedBox(height: kPadding * 4),
+                Center(
+                  child: Text(
+                    'Choose difficulty to play',
+                    style: textStyle.copyWith(
+                      color: colorPrimary,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              ...controller.difficultyList(),
-            ],
+                const SizedBox(height: 20),
+                ...controller.listDifficulty,
+              ],
+            ),
           ),
         ),
       ),

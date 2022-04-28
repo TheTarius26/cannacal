@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cannacal/app/core/theme/color_theme.dart';
-import 'package:cannacal/app/data/model/game_setting.dart';
+import 'package:cannacal/app/data/model/difficulty.dart';
 import 'package:cannacal/app/data/model/option.dart';
 import 'package:cannacal/app/data/provider/local/option_provider.dart';
 import 'package:cannacal/app/data/repo/game_repository.dart';
@@ -24,7 +24,7 @@ class GameController extends GetxController {
   final isGameOver = false.obs;
 
   // Game preferences
-  final setting = GameSetting().obs;
+  final setting = Difficulty().obs;
   final lives = 0.obs;
   final matrix = 0.obs;
   final point = 0.obs;
