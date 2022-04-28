@@ -16,13 +16,10 @@ class DifficultyBinding extends Bindings {
     Get.lazyPut(
       () => DifficultyRepository(
         difficultyProvider: Get.find<DifficultyProvider>(),
-      ),
-    );
-    Get.lazyPut(
-      () => DifficultyProvider(
         highScoreProvider: Get.find<HighScoreProvider>(),
       ),
     );
+    Get.lazyPut(() => DifficultyProvider());
     Get.lazyPut(() => HighScoreProvider());
   }
 }
