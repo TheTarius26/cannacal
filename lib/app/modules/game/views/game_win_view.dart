@@ -53,6 +53,7 @@ class GameWinView extends GetView<GameController> {
         GameModalButton(
           onPressed: () {
             Get.back();
+            Get.offNamed('/difficulty');
           },
           text: 'Home',
           color: colorPrimary,
