@@ -1,4 +1,5 @@
-import 'package:cannacal/app/data/model/difficulty.dart';
+import 'package:cannacal/app/data/enum/difficulty.dart';
+import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/data/provider/db/high_score_provider.dart';
 import 'package:cannacal/app/data/provider/local/difficulty_provider.dart';
 
@@ -12,9 +13,9 @@ class DifficultyRepository {
   })  : _difficultyProvider = difficultyProvider,
         _highScoreProvider = highScoreProvider;
 
-  Future<List<Difficulty>> getListGameSetting() async {
-    return await _difficultyProvider.getListGameSetting(
-      await _highScoreProvider.getHighScore(),
-    );
-  }
+  Future<List<GameSetting>> getListGameSetting() async =>
+      await _difficultyProvider.getListGameSetting();
+
+  Future<int> getHighScoreByDifficulty(String difficulty) async =>
+      await _highScoreProvider.getHighScoreByDifficulty(difficulty);
 }

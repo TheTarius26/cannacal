@@ -18,12 +18,14 @@ class DifficultyController extends GetxController {
 
   void getDifficultyList() async {
     final list = await _difficultyRepository.getListGameSetting();
-    listDifficulty.value = List.generate(
-      list.length,
-      (index) => DifficultyItem(
-        highScore: list[index].highScore.toString(),
-        gameSetting: list[index],
-      ),
-    );
+    for (var item in list) {
+      final highScore = await _difficultyRepository.getHighScoreByDifficulty(
+        item.difficulty,
+      );
+      listDifficulty.add(DifficultyItem(
+        highScore: highScore.toString(),
+        gameSetting: item,
+      ));
+    }
   }
 }

@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:cannacal/app/core/theme/color_theme.dart';
-import 'package:cannacal/app/data/model/difficulty.dart';
+import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/data/model/option.dart';
-import 'package:cannacal/app/data/provider/local/option_provider.dart';
 import 'package:cannacal/app/data/repo/game_repository.dart';
 import 'package:cannacal/app/modules/game/views/game_lose_view.dart';
 import 'package:cannacal/app/modules/game/views/game_win_view.dart';
@@ -24,7 +23,7 @@ class GameController extends GetxController {
   final isGameOver = false.obs;
 
   // Game preferences
-  final setting = Difficulty().obs;
+  final setting = GameSetting().obs;
   final lives = 0.obs;
   final matrix = 0.obs;
   final point = 0.obs;
@@ -121,7 +120,7 @@ class GameController extends GetxController {
   }
 
   /// state when the game is win
-  void onWin() {
+  void onWin() async {
     isGameOver.value = true;
     Get.bottomSheet(
       const GameWinView(),
@@ -129,6 +128,7 @@ class GameController extends GetxController {
       enableDrag: false,
       isScrollControlled: true,
     );
+    await _gameRepository.saveHighScore(setting.value.difficulty, scoreCalc());
   }
 
   /// state when the game is lose

@@ -1,7 +1,7 @@
 import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/core/theme/text_theme.dart';
 import 'package:cannacal/app/core/utils/constant.dart';
-import 'package:cannacal/app/data/model/difficulty.dart';
+import 'package:cannacal/app/data/model/game_setting.dart';
 import 'package:cannacal/app/modules/difficulty/controllers/difficulty_controller.dart';
 import 'package:cannacal/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class DifficultyItem extends GetView<DifficultyController> {
   }) : super(key: key);
 
   final String highScore;
-  final Difficulty gameSetting;
+  final GameSetting gameSetting;
 
   @override
   Widget build(BuildContext context) {

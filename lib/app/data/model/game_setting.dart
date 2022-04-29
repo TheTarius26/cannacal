@@ -1,53 +1,55 @@
-class Difficulty {
+import 'package:cannacal/app/data/enum/difficulty.dart';
+
+class GameSetting {
   String title;
   int lives;
   int matrix;
   int point;
   int duration;
-  int highScore;
+  String difficulty;
 
-  Difficulty({
+  GameSetting({
     this.title = '',
     this.lives = 0,
     this.matrix = 0,
     this.point = 0,
     this.duration = 0,
-    this.highScore = 0,
+    this.difficulty = Difficulty.veryEasy,
   });
 
-  factory Difficulty.veryEasy({int highScore = 0}) => Difficulty(
+  factory GameSetting.veryEasy() => GameSetting(
         title: 'Very Easy',
         lives: 0,
         matrix: 2,
         point: 10,
         duration: 5,
-        highScore: highScore,
+        difficulty: Difficulty.veryEasy,
       );
 
-  factory Difficulty.easy({int highScore = 0}) => Difficulty(
+  factory GameSetting.easy() => GameSetting(
         title: 'Easy',
         lives: 5,
         matrix: 3,
         point: 100,
         duration: 180,
-        highScore: highScore,
+        difficulty: Difficulty.easy,
       );
 
-  factory Difficulty.medium({int highScore = 0}) => Difficulty(
+  factory GameSetting.medium() => GameSetting(
         title: 'Medium',
         lives: 3,
         matrix: 4,
         point: 500,
         duration: 120,
-        highScore: highScore,
+        difficulty: Difficulty.medium,
       );
 
-  factory Difficulty.hard({int highScore = 0}) => Difficulty(
+  factory GameSetting.hard() => GameSetting(
         title: 'Hard',
         lives: 3,
         matrix: 5,
         point: 1000,
         duration: 300,
-        highScore: highScore,
+        difficulty: Difficulty.hard,
       );
 }

@@ -1,38 +1,45 @@
+import 'package:cannacal/app/data/enum/difficulty.dart';
 import 'package:cannacal/app/data/model/high_score.dart';
+import 'package:cannacal/app/data/provider/hive/box_constant.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HighScoreProvider {
-  final String _boxName = 'high_score';
-
-  Future<void> insertHighScore(HighScore highScore) async {
+class HighScoreProvider extends GetConnect {
+  Future<void> saveSingleHighScore(String difficulty, int highScore) async {
     await Hive.initFlutter();
-    final box = await Hive.openBox(_boxName);
+    final box = await Hive.openBox(highScoreBox);
+    int previousHighScore = box.get(difficulty) ?? 0;
+    int newHighScore = previousHighScore + highScore;
 
-    box.put('very_easy', highScore.veryEasy);
-    box.put('easy', highScore.easy);
-    box.put('medium', highScore.medium);
-    box.put('hard', highScore.hard);
+    box.put(difficulty, newHighScore);
   }
 
-  Future<HighScore> getHighScore() async {
+  Future<int> getHighScoreByDifficulty(String difficulty) async {
     await Hive.initFlutter();
-    final box = await Hive.openBox(_boxName);
+    final box = await Hive.openBox(highScoreBox);
+
+    return box.get(difficulty) ?? 0;
+  }
+
+  Future<HighScore> getAllHighScores() async {
+    await Hive.initFlutter();
+    final box = await Hive.openBox(highScoreBox);
 
     return HighScore(
-      veryEasy: box.get('very_easy') ?? 0,
-      easy: box.get('easy') ?? 0,
-      medium: box.get('medium') ?? 0,
-      hard: box.get('hard') ?? 0,
+      veryEasy: box.get(Difficulty.veryEasy),
+      easy: box.get(Difficulty.easy),
+      medium: box.get(Difficulty.medium),
+      hard: box.get(Difficulty.hard),
     );
   }
 
   Future<void> deleteHighScore() async {
     await Hive.initFlutter();
-    final box = await Hive.openBox(_boxName);
+    final box = await Hive.openBox(highScoreBox);
 
-    box.delete('very_easy');
-    box.delete('easy');
-    box.delete('medium');
-    box.delete('hard');
+    box.delete(Difficulty.veryEasy);
+    box.delete(Difficulty.easy);
+    box.delete(Difficulty.medium);
+    box.delete(Difficulty.hard);
   }
 }
