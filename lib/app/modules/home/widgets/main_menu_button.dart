@@ -32,6 +32,7 @@ class MainMenuButton extends StatelessWidget {
               color: colorSurface,
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
         style: style ??

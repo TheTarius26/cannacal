@@ -34,15 +34,15 @@ class HomeView extends GetView<HomeController> {
             children: [
               MainMenuButton(
                 text: 'Play',
-                onPressed: () => Get.offNamed('/difficulty'),
+                onPressed: () => Get.toNamed('/difficulty'),
               ),
               MainMenuButton(
                 text: 'Terms And Condition',
-                onPressed: () => Get.offNamed('/terms'),
+                onPressed: () => Get.toNamed('/terms'),
               ),
               MainMenuButton(
                 text: 'Privacy Policy',
-                onPressed: () => Get.offNamed('/privacy'),
+                onPressed: () => Get.toNamed('/privacy'),
               ),
               MainMenuButton(
                 text: 'Exit',

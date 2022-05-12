@@ -6,6 +6,8 @@ import '../modules/game/bindings/game_binding.dart';
 import '../modules/game/views/game_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/onboard/bindings/onboard_binding.dart';
+import '../modules/onboard/views/onboard_view.dart';
 import '../modules/privacy/bindings/privacy_binding.dart';
 import '../modules/privacy/views/privacy_view.dart';
 import '../modules/terms/bindings/terms_binding.dart';
@@ -16,7 +18,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.ONBOARD;
 
   static final routes = [
     GetPage(
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.PRIVACY,
       page: () => PrivacyView(),
       binding: PrivacyBinding(),
+    ),
+    GetPage(
+      name: _Paths.ONBOARD,
+      page: () => OnboardView(),
+      binding: OnboardBinding(),
     ),
   ];
 }

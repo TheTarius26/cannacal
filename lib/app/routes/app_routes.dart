@@ -8,6 +8,7 @@ abstract class Routes {
   static const DIFFICULTY = _Paths.DIFFICULTY;
   static const TERMS = _Paths.TERMS;
   static const PRIVACY = _Paths.PRIVACY;
+  static const ONBOARD = _Paths.ONBOARD;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const DIFFICULTY = '/difficulty';
   static const TERMS = '/terms';
   static const PRIVACY = '/privacy';
+  static const ONBOARD = '/onboard';
 }
