@@ -5,6 +5,7 @@ import 'package:cannacal/app/modules/game/widgets/grid_option.dart';
 import 'package:flutter/material.dart';
 import 'package:cannacal/app/modules/game/controllers/game_controller.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class GameView extends GetView<GameController> {
   const GameView({Key? key}) : super(key: key);
@@ -67,14 +68,30 @@ class GameView extends GetView<GameController> {
       color: colorPrimary,
       height: kToolbarHeight,
       alignment: Alignment.center,
-      child: Text(
-        'Place Ads Here',
-        style: textStyle.copyWith(
-          fontSize: 16,
-          color: colorSurface,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      // child: Text(
+      //   'Place Ads Here',
+      //   style: textStyle.copyWith(
+      //     fontSize: 16,
+      //     color: colorSurface,
+      //     fontWeight: FontWeight.bold,
+      //   ),
+      // ),
+      child: Obx(() {
+        if (controller.isAdBannerLoaded.value) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: controller.bannerAd!.size.width.toDouble(),
+                height: controller.bannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: controller.bannerAd as AdWithView),
+              ),
+            ],
+          );
+        } else {
+          return Container();
+        }
+      }),
     );
   }
 

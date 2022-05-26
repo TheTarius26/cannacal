@@ -5,6 +5,7 @@ import 'package:cannacal/app/modules/difficulty/controllers/difficulty_controlle
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class DifficultyView extends GetView<DifficultyController> {
   const DifficultyView({Key? key}) : super(key: key);
@@ -25,26 +26,46 @@ class DifficultyView extends GetView<DifficultyController> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Obx(
-            () => Column(
-              children: [
-                const SizedBox(height: kPadding * 4),
-                Center(
-                  child: Text(
-                    'Choose difficulty to play',
-                    style: textStyle.copyWith(
-                      color: colorPrimary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Obx(
+                () => Column(
+                  children: [
+                    const SizedBox(height: kPadding * 4),
+                    Center(
+                      child: Text(
+                        'Choose difficulty to play',
+                        style: textStyle.copyWith(
+                          color: colorPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    ...controller.listDifficulty,
+                  ],
                 ),
-                const SizedBox(height: 20),
-                ...controller.listDifficulty,
-              ],
+              ),
             ),
-          ),
+            Obx(() {
+              if (controller.isAdBannerLoaded.value) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: controller.bannerAd!.size.width.toDouble(),
+                      height: controller.bannerAd!.size.height.toDouble(),
+                      child: AdWidget(ad: controller.bannerAd as AdWithView),
+                    ),
+                  ],
+                );
+              } else {
+                return Container();
+              }
+            })
+          ],
         ),
       ),
     );

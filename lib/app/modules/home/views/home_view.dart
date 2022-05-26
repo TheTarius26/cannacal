@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -28,28 +29,48 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MainMenuButton(
-                text: 'Play',
-                onPressed: () => Get.toNamed('/difficulty'),
+        body: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MainMenuButton(
+                    text: 'Play',
+                    onPressed: () => Get.toNamed('/difficulty'),
+                  ),
+                  MainMenuButton(
+                    text: 'Terms And Condition',
+                    onPressed: () => Get.toNamed('/terms'),
+                  ),
+                  MainMenuButton(
+                    text: 'Privacy Policy',
+                    onPressed: () => Get.toNamed('/privacy'),
+                  ),
+                  MainMenuButton(
+                    text: 'Exit',
+                    onPressed: () => SystemNavigator.pop(),
+                  ),
+                ],
               ),
-              MainMenuButton(
-                text: 'Terms And Condition',
-                onPressed: () => Get.toNamed('/terms'),
-              ),
-              MainMenuButton(
-                text: 'Privacy Policy',
-                onPressed: () => Get.toNamed('/privacy'),
-              ),
-              MainMenuButton(
-                text: 'Exit',
-                onPressed: () => SystemNavigator.pop(),
-              ),
-            ],
-          ),
+            ),
+            Obx(() {
+              if (controller.isAdBannerLoaded.value) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: controller.bannerAd!.size.width.toDouble(),
+                      height: controller.bannerAd!.size.height.toDouble(),
+                      child: AdWidget(ad: controller.bannerAd as AdWithView),
+                    ),
+                  ],
+                );
+              } else {
+                return Container();
+              }
+            })
+          ],
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:cannacal/app/modules/difficulty/controllers/difficulty_controlle
 import 'package:cannacal/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class DifficultyItem extends GetView<DifficultyController> {
   const DifficultyItem({
@@ -66,7 +67,12 @@ class DifficultyItem extends GetView<DifficultyController> {
               ),
             ),
             onPressed: () {
-              Get.offNamed(Routes.GAME, arguments: gameSetting);
+              if (controller.isAdInterstitialLoaded.value) {
+                interstitialAd();
+                controller.interstitialAd!.show();
+              } else {
+                goToGame();
+              }
             },
             child: Text(
               'Play',
@@ -79,5 +85,22 @@ class DifficultyItem extends GetView<DifficultyController> {
         ],
       ),
     );
+  }
+
+  void interstitialAd() {
+    controller.interstitialAd!.fullScreenContentCallback =
+        FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        goToGame();
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        ad.dispose();
+      },
+    );
+  }
+
+  void goToGame() {
+    Get.offNamed(Routes.GAME, arguments: gameSetting);
   }
 }

@@ -8,6 +8,7 @@ import 'package:cannacal/app/modules/game/views/game_lose_view.dart';
 import 'package:cannacal/app/modules/game/views/game_win_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class GameController extends GetxController {
   final GameRepository _gameRepository;
@@ -30,6 +31,12 @@ class GameController extends GetxController {
   final gameDuration = 0.obs;
   final score = 0.obs;
 
+  // AdMob
+  final isAdBannerLoaded = false.obs;
+  BannerAd? bannerAd;
+
+  Timer? timer;
+
   @override
   void onInit() {
     super.onInit();
@@ -41,6 +48,15 @@ class GameController extends GetxController {
     super.onReady();
     timerStart();
     getOptionList();
+    loadAdBanner();
+  }
+
+  @override
+  void onClose() {
+    if (timer != null) {
+      timer!.cancel();
+    }
+    bannerAd!.dispose();
   }
 
   void getOptionList() async {
@@ -52,7 +68,7 @@ class GameController extends GetxController {
 
   /// start the timer
   void timerStart() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (gameDuration.value == 0) {
         timer.cancel();
         onLose();
@@ -167,5 +183,17 @@ class GameController extends GetxController {
 
   void restart() {
     onInit();
+  }
+
+  void loadAdBanner() {
+    if (!isAdBannerLoaded.value) {
+      bannerAd = _gameRepository.getAdBanner(
+        BannerAdListener(
+            onAdFailedToLoad: (ad, error) => ad.dispose(),
+            onAdLoaded: (ad) {
+              isAdBannerLoaded.value = true;
+            }),
+      );
+    }
   }
 }
