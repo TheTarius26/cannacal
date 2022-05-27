@@ -4,6 +4,7 @@ import 'package:cannacal/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/onboard_controller.dart';
 
@@ -53,7 +54,12 @@ class OnboardView extends GetView<OnboardController> {
                       const Spacer(),
                       InkWell(
                         onTap: () {
-                          Get.toNamed(Routes.HOME);
+                          if (GetStorage().read('isTermAccepted') == null ||
+                              GetStorage().read('isTermAccepted') == false) {
+                            Get.toNamed(Routes.TERMS);
+                          } else {
+                            Get.toNamed(Routes.HOME);
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
