@@ -2,6 +2,7 @@ import 'package:cannacal/app/core/theme/color_theme.dart';
 import 'package:cannacal/app/core/theme/text_theme.dart';
 import 'package:cannacal/app/core/utils/constant.dart';
 import 'package:cannacal/app/modules/game/widgets/grid_option.dart';
+import 'package:cannacal/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:cannacal/app/modules/game/controllers/game_controller.dart';
 import 'package:get/get.dart';
@@ -12,29 +13,36 @@ class GameView extends GetView<GameController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: gameAppBar(),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(kPadding),
-            child: Column(
-              children: [
-                const SizedBox(height: kToolbarHeight),
-                timer(),
-                const SizedBox(height: kPadding),
-                pointText(),
-                const SizedBox(height: kPadding),
-                lives(),
-                const SizedBox(height: kPadding),
-                gameTable(),
-                const SizedBox(height: kPadding),
-                resetButton(),
-              ],
+    return WillPopScope(
+      onWillPop: _goToDifficulty,
+      child: Scaffold(
+        appBar: gameAppBar(),
+        body: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(kPadding),
+              child: Column(
+                children: [
+                  const SizedBox(height: kToolbarHeight),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      timer(),
+                      lives(),
+                    ],
+                  ),
+                  const SizedBox(height: kPadding),
+                  pointText(),
+                  const SizedBox(height: kPadding),
+                  gameTable(),
+                  const SizedBox(height: kPadding),
+                ],
+              ),
             ),
-          ),
-          bannerAd(),
-        ],
+            bannerAd(),
+            resetButton(),
+          ],
+        ),
       ),
     );
   }
@@ -68,14 +76,6 @@ class GameView extends GetView<GameController> {
       color: colorPrimary,
       height: kToolbarHeight,
       alignment: Alignment.center,
-      // child: Text(
-      //   'Place Ads Here',
-      //   style: textStyle.copyWith(
-      //     fontSize: 16,
-      //     color: colorSurface,
-      //     fontWeight: FontWeight.bold,
-      //   ),
-      // ),
       child: Obx(() {
         if (controller.isAdBannerLoaded.value) {
           return Row(
@@ -165,20 +165,33 @@ class GameView extends GetView<GameController> {
   Obx resetButton() {
     return Obx(() {
       if (controller.showResetButton.value) {
-        return SizedBox(
-          height: 40,
-          child: ElevatedButton.icon(
-            onPressed: controller.onReset,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Reset'),
-            style: ElevatedButton.styleFrom(
-              primary: colorPrimary,
-              onSurface: colorSurface,
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Center(
+              child: SizedBox(
+                height: 40,
+                child: ElevatedButton.icon(
+                  onPressed: controller.onReset,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Reset'),
+                  style: ElevatedButton.styleFrom(
+                    primary: colorPrimary,
+                    onSurface: colorSurface,
+                  ),
+                ),
+              ),
             ),
-          ),
+            SizedBox(height: kPadding)
+          ],
         );
       }
       return Container();
     });
+  }
+
+  Future<bool> _goToDifficulty() async {
+    return (await Get.offNamed(Routes.DIFFICULTY)) ?? false;
   }
 }
