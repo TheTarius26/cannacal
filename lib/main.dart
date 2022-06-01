@@ -8,10 +8,11 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   MobileAds.instance
     ..initialize()
     ..updateRequestConfiguration(
-      RequestConfiguration(testDeviceIds: []),
+      RequestConfiguration(testDeviceIds: ["EFC47B3178617470A972F25D4813480D"]),
     );
   await GetStorage.init();
 
