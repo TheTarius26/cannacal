@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cannacal">
    <application
-        android:label="cannacal"
+        android:label="Plus Minus Game"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
         <!-- Admob -->
+        <!-- Test : ca-app-pub-3940256099942544~3347511713 -->
+        <!-- Real : ca-app-pub-8350728512079415~4044140849 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8350728512079415~4044140849"/>

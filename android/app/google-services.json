@@ -1,0 +1,194 @@
+{
+  "project_info": {
+    "project_number": "551614004938",
+    "project_id": "rh-aka",
+    "storage_bucket": "rh-aka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551614004938:android:2b47a356eb730899a03e33",
+        "android_client_info": {
+          "package_name": "com.RHaka.BacaanDoaKristen.DoaSeharihari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaWjwz3R0q4O3tEojvW1R3wvsp9qV2M0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551614004938-v5lm139jq2t94ushufn7822da1v1ac12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cannacal"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8350728512079415~2828469005"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551614004938:android:40b53c321faa0b3da03e33",
+        "android_client_info": {
+          "package_name": "com.RHaka.mjolnirhammersimulator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaWjwz3R0q4O3tEojvW1R3wvsp9qV2M0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551614004938-v5lm139jq2t94ushufn7822da1v1ac12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cannacal"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8350728512079415~7258145511"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551614004938:android:d866761261dc07d3a03e33",
+        "android_client_info": {
+          "package_name": "com.rhaka.bodymasscalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaWjwz3R0q4O3tEojvW1R3wvsp9qV2M0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551614004938-v5lm139jq2t94ushufn7822da1v1ac12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cannacal"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8350728512079415~7044987557"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551614004938:android:daa92650e374b499a03e33",
+        "android_client_info": {
+          "package_name": "com.rhaka.cannacal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaWjwz3R0q4O3tEojvW1R3wvsp9qV2M0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551614004938-v5lm139jq2t94ushufn7822da1v1ac12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cannacal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551614004938:android:ba7e129e74dd19e3a03e33",
+        "android_client_info": {
+          "package_name": "com.rhaka.clickogame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWaWjwz3R0q4O3tEojvW1R3wvsp9qV2M0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551614004938-91kbsd920ijjkjmmgl5e6os2ls6brrif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "551614004938-v5lm139jq2t94ushufn7822da1v1ac12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cannacal"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8350728512079415~1021721836"
+    }
+  ],
+  "configuration_version": "1"
+}
