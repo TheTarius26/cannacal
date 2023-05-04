@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cannacal/app/data/repo/difficulty_repository.dart';
 import 'package:cannacal/app/modules/difficulty/widgets/difficulty_item.dart';
 import 'package:get/get.dart';
